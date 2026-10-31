@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Event } from "@/lib/type";
 import UpcomingCard from "@/components/events/UpcomingCard";
 import { Plus, CalendarDays, Sparkles } from "lucide-react";
+import EventFilter from "@/components/events/EventFilter";
 
 const page = async () => {
     const res = await fetch("http://localhost:5000/upcoming-event", {
@@ -13,7 +14,7 @@ const page = async () => {
         throw new Error("Failed to fetch upcoming events");
     }
 
-    const allEvent: Event[] = await res.json();
+    const allEvents: Event[] = await res.json();
 
     return (
         <main className="min-h-screen bg-[#F5FAF7] py-12 transition-colors duration-300 dark:bg-slate-950 sm:py-16">
@@ -51,36 +52,13 @@ const page = async () => {
                     </Link>
                 </div>
 
-                {/* Event Overview */}
-                {/* <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-
-                    <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
-                            <CalendarDays size={22} />
-                        </div>
-
-                        <div>
-                            <h2 className="font-semibold text-slate-800 dark:text-white">
-                                Explore Opportunities
-                            </h2>
-
-                            <p className="text-sm text-slate-500 dark:text-slate-400">
-                                Find an event and become a volunteer.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="rounded-xl bg-emerald-50 px-4 py-2 dark:bg-emerald-950">
-                        <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">
-                            {allEvent.length} Events Available
-                        </span>
-                    </div>
-                </div> */}
+                {/* Filtered event */}
+                {/* <EventFilter events={allEvents} /> */}
 
                 {/* Events Grid */}
-                {allEvent.length > 0 ? (
+                {allEvents.length > 0 ? (
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {allEvent.map((event) => (
+                        {allEvents.map((event) => (
                             <UpcomingCard
                                 key={event._id}
                                 event={event}

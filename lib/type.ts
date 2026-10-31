@@ -1,8 +1,8 @@
 export interface Event {
     _id: string;
     eventTitle: string;
-    eventType: string;
-    departureDate: string;
+    eventCategory: string;
+    eventDate: string;
     eventLocation: string;
     imageUrl: string;
     description: string;

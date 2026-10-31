@@ -1,21 +1,9 @@
 "use client";
 
+import { eventCategories } from "@/data/allCategory";
 import { eventImages } from "@/data/eventImages";
 import { PlusCircle, CalendarDays, MapPin, ImageIcon, Leaf } from "lucide-react";
 import React from "react";
-
-export const eventCategories = [
-    "Winter Relief",
-    "Tree Plantation",
-    "Blood Donation",
-    "Flood Relief",
-    "Food Distribution",
-    "Community Cleanup",
-    "Health & Medical Camp",
-    "Education Support",
-    "Animal Welfare",
-    "Disaster Relief",
-];
 
 const AddEventPage = () => {
 
@@ -100,13 +88,13 @@ const AddEventPage = () => {
                         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 
                             <div>
-                                <label htmlFor="eventType" className={labelClassName}>
+                                <label htmlFor="eventCategory" className={labelClassName}>
                                     Event Type
                                 </label>
 
                                 <select
-                                    id="eventType"
-                                    name="eventType"
+                                    id="eventCategory"
+                                    name="eventCategory"
                                     required
                                     className={`${inputClassName} cursor-pointer`}
                                 >
@@ -119,7 +107,7 @@ const AddEventPage = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="departureDate" className={labelClassName}>
+                                <label htmlFor="eventDate" className={labelClassName}>
                                     Event Date
                                 </label>
 
@@ -130,9 +118,9 @@ const AddEventPage = () => {
                                     />
 
                                     <input
-                                        id="departureDate"
+                                        id="eventDate"
                                         type="date"
-                                        name="departureDate"
+                                        name="eventDate"
                                         min={new Date().toISOString().split("T")[0]}
                                         className={`${inputClassName} pl-11`}
                                     />

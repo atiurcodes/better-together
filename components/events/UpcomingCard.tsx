@@ -30,16 +30,16 @@ export default function UpcomingCard({ event }: { event: Event }) {
                 {/* Category Badge */}
                 <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/30 bg-white/95 px-3 py-1.5 text-xs font-semibold text-emerald-800 shadow-sm backdrop-blur-md dark:border-slate-600 dark:bg-slate-900/90 dark:text-emerald-300">
                     <Leaf size={13} />
-                    {event.eventType}
+                    {event.eventCategory}
                 </div>
 
                 {/* Date Badge */}
                 <div className="absolute bottom-4 right-4 rounded-xl border border-white/40 bg-white/95 px-4 py-2 text-center shadow-lg backdrop-blur-md dark:border-slate-600 dark:bg-slate-900/90">
                     <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
-                        {new Date(`${event.departureDate}T00:00:00`).getDate()}
+                        {new Date(`${event.eventDate}T00:00:00`).getDate()}
                     </p>
                     <p className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">
-                        {new Date(`${event.departureDate}T00:00:00`).toLocaleString("en-US", {
+                        {new Date(`${event.eventDate}T00:00:00`).toLocaleString("en-US", {
                             month: "short",
                         })}
                     </p>
@@ -75,7 +75,7 @@ export default function UpcomingCard({ event }: { event: Event }) {
                     <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
                         <CalendarDays size={17} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
                         <span>
-                            {new Date(`${event.departureDate}T00:00:00`).toLocaleDateString("en-US", {
+                            {new Date(`${event.eventDate}T00:00:00`).toLocaleDateString("en-US", {
                                 day: "numeric",
                                 month: "long",
                                 year: "numeric",
@@ -87,10 +87,10 @@ export default function UpcomingCard({ event }: { event: Event }) {
                 {/* Action Button */}
                 <div className="border-t border-emerald-50 pt-4 dark:border-slate-700">
                     <Link
-                        href={`/events/${event._id}`}
+                        href={`/upcoming-event/${event._id}`}
                         className="flex w-full items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
-                        <span>Explore Event</span>
+                        <span>View Event</span>
 
                         <ArrowUpRight
                             size={18}
