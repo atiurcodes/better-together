@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ImagePlus, LockKeyhole, Mail, UserRound } from "lucide-react";
 import React from "react";
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 
 export default function SignUp() {
@@ -39,6 +39,13 @@ export default function SignUp() {
         }
     }
 
+    const handleGoogleSignUp = async () => {
+        const resData = await signIn.social({
+            provider: 'google'
+        })
+        console.log(resData);
+    }
+
     return (
         <Card className="border-0 bg-transparent shadow-none">
 
@@ -48,8 +55,7 @@ export default function SignUp() {
                 </CardTitle>
 
                 <CardDescription className="text-sm text-center leading-6 text-slate-500 dark:text-slate-400">
-                    Join GoodGather and start making a positive impact
-                    in your community.
+                    Become part of BetterToGather and help make a positive difference in your community.
                 </CardDescription>
             </CardHeader>
 
@@ -60,6 +66,7 @@ export default function SignUp() {
                         {/* Social Signup */}
                         <Field>
                             <Button
+                                onClick={handleGoogleSignUp}
                                 variant="outline"
                                 type="button"
                                 className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
@@ -79,7 +86,7 @@ export default function SignUp() {
                         </Field>
 
                         <FieldSeparator className="text-xs text-slate-400 [&>span]:bg-white dark:[&>span]:bg-slate-900">
-                            OR SIGN UP WITH EMAIL
+                            OR CONTINUE WITH EMAIL
                         </FieldSeparator>
 
                         {/* Name */}
@@ -172,7 +179,7 @@ export default function SignUp() {
                             </Button>
 
                             <FieldDescription className="text-center text-sm text-slate-500 dark:text-slate-400">
-                                Already have an account?{" "}
+                                Already a member?{" "}
                                 <Link
                                     href="/sign-in"
                                     className="font-semibold text-emerald-700 hover:text-emerald-800 hover:underline dark:text-emerald-400"

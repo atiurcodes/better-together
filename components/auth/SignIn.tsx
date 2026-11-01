@@ -37,6 +37,13 @@ export default function SignUp() {
         }
     }
 
+    const handleGoogleSignUp = async () => {
+        const resData = await signIn.social({
+            provider: 'google'
+        })
+        console.log(resData);
+    }
+
     return (
         <Card className="border-0 bg-transparent shadow-none">
 
@@ -57,6 +64,7 @@ export default function SignUp() {
                         {/* Social Signin */}
                         <Field>
                             <Button
+                                onClick={handleGoogleSignUp}
                                 variant="outline"
                                 type="button"
                                 className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
