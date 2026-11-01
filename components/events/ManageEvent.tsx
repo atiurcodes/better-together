@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import EditEventDialog from "./EditEventDialog";
+import DeleteEventDialog from "./DeleteEventDialog";
 
 export default function ManageEvent({ event }: { event: Event }) {
     return (
@@ -114,12 +115,7 @@ export default function ManageEvent({ event }: { event: Event }) {
                     <div className="flex items-center gap-2">
                         <EditEventDialog event={event} />
 
-                        <button
-                            type="button"
-                            className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-all hover:bg-red-600 hover:text-white dark:bg-red-950/40 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white"
-                        >
-                            Delete
-                        </button>
+                        <DeleteEventDialog event={event} />
                     </div>
 
                 </div>
