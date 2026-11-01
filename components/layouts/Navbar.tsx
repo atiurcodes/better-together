@@ -145,10 +145,12 @@ export default function Navbar() {
                                         </DropdownMenuItem>
                                     </Link>
                                     {/* Joined Events */}
-                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                        <Users className="size-4 text-emerald-700" />
-                                        Joined Events
-                                    </DropdownMenuItem>
+                                    <Link href='/joined-event'>
+                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                            <Users className="size-4 text-emerald-700" />
+                                            Joined Events
+                                        </DropdownMenuItem>
+                                    </Link>
 
                                     <DropdownMenuSeparator className="bg-emerald-100" />
 

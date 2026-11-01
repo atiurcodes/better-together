@@ -5,11 +5,12 @@ import {
     CalendarDays,
     ArrowUpRight,
     Leaf,
+    CheckCircle2,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function ManageEvent({ event }: { event: Event }) {
+export default function JoinedEvent({ event }: { event: Event }) {
     return (
         <article className="group w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-900/10 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-emerald-700">
 
@@ -33,7 +34,13 @@ export default async function ManageEvent({ event }: { event: Event }) {
                     {event.eventCategory}
                 </div>
 
-                {/* Date Badge */}
+                {/* Joined Badge */}
+                <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/30 bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md">
+                    <CheckCircle2 size={13} />
+                    Joined
+                </div>
+
+                {/* Event Date Badge */}
                 <div className="absolute bottom-4 right-4 rounded-xl border border-white/40 bg-white/95 px-4 py-2 text-center shadow-lg backdrop-blur-md dark:border-slate-600 dark:bg-slate-900/90">
                     <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
                         {new Date(`${event.eventDate}T00:00:00`).getDate()}
@@ -65,15 +72,21 @@ export default async function ManageEvent({ event }: { event: Event }) {
 
                     {/* Location */}
                     <div className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-300">
-                        <MapPin size={17} className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                        <MapPin
+                            size={17}
+                            className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400"
+                        />
                         <span className="line-clamp-1">
                             {event.eventLocation}
                         </span>
                     </div>
 
-                    {/* Date */}
+                    {/* Event Date */}
                     <div className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
-                        <CalendarDays size={17} className="shrink-0 text-emerald-600 dark:text-emerald-400" />
+                        <CalendarDays
+                            size={17}
+                            className="shrink-0 text-emerald-600 dark:text-emerald-400"
+                        />
                         <span>
                             {new Date(`${event.eventDate}T00:00:00`).toLocaleDateString("en-US", {
                                 day: "numeric",
@@ -90,7 +103,7 @@ export default async function ManageEvent({ event }: { event: Event }) {
                         href={`/upcoming-event/${event._id}`}
                         className="flex w-full items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
-                        <span>View Event</span>
+                        <span>View Event Details</span>
 
                         <ArrowUpRight
                             size={18}
