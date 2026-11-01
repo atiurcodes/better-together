@@ -13,14 +13,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button"
 
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
-import { CalendarPlus, LayoutDashboard, LogOut, UserRound, Users } from "lucide-react";
+import { CalendarPlus, LayoutDashboard, LogOut, Users } from "lucide-react";
 
 const navLinks = [
     { name: "Home", href: "/" },

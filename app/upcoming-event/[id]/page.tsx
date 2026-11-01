@@ -8,12 +8,12 @@ import {
     HeartHandshake,
     Leaf,
     Clock,
-    Share2,
     Users,
     Sparkles,
 } from "lucide-react";
 
 import { Event } from "@/lib/type";
+import JoinedEvents from "@/components/events/JoinedEventButton";
 
 interface EventDetailsPageProps {
     params: Promise<{
@@ -201,14 +201,8 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
                                 </div>
 
                                 <div className="border-t border-slate-100 pt-5 dark:border-slate-800">
-                                    <button
-                                        type="button"
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3.5 font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-700"
-                                    >
-                                        <HeartHandshake size={19} />
-                                        Join Event
-                                    </button>
-
+                                    {/* join event button functionality */}
+                                    <JoinedEvents event={event} />
                                     <p className="mt-3 text-center text-xs text-slate-400 dark:text-slate-500">
                                         Together, we can make a difference.
                                     </p>

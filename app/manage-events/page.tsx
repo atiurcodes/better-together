@@ -41,7 +41,7 @@ const ManageEventPage = async () => {
 
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base dark:text-gray-400">
                                 Every meaningful change starts with an event.
-                                Keep track of the positive impact you're
+                                Keep track of the positive impact you&apos;re
                                 creating in your community.
                             </p>
                         </div>
