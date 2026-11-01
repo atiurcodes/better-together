@@ -1,8 +1,28 @@
 "use client";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button"
+
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { signOut } from "@/lib/auth-client";
+import { LogOut, UserRound, LayoutDashboard } from "lucide-react";
 
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -12,6 +32,14 @@ const navLinks = [
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
+    const handleLogOut = () => {
+        authClient.signOut();
+        redirect('/')
+    }
 
     return (
         <header className="sticky top-0 z-50 border-b border-[#DCE6D8] bg-[#F3F7EF]/95 backdrop-blur-md dark:border-[#2D4434] dark:bg-[#14251B]/95">
@@ -68,24 +96,26 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Actions */}
-                <div className="hidden items-center gap-3 md:flex">
+                <ThemeToggle />
+                {user ? (
+                    <Button onClick={handleLogOut} variant="destructive">Logout</Button>
+                ) : (
+                    <div className="hidden items-center gap-3 md:flex">
+                        <Link
+                            href="/sign-in"
+                            className="text-sm font-semibold text-[#244B35] transition-colors hover:text-[#628B65] dark:text-[#E2EDE0] dark:hover:text-[#91B88F]"
+                        >
+                            Login
+                        </Link>
 
-                    <ThemeToggle />
-
-                    <Link
-                        href="/sign-in"
-                        className="text-sm font-semibold text-[#244B35] transition-colors hover:text-[#628B65] dark:text-[#E2EDE0] dark:hover:text-[#91B88F]"
-                    >
-                        Login
-                    </Link>
-
-                    <Link
-                        href="/sign-up"
-                        className="rounded-full bg-[#244B35] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
-                    >
-                        Join Us <span className="ml-1">↗</span>
-                    </Link>
-                </div>
+                        <Link
+                            href="/sign-up"
+                            className="rounded-full bg-[#244B35] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
+                        >
+                            Join Us <span className="ml-1">↗</span>
+                        </Link>
+                    </div>
+                )}
 
                 {/* Mobile Menu Button */}
                 <button
