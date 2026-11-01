@@ -7,7 +7,6 @@ import {
     MapPin,
     ArrowUpRight,
     CheckCircle2,
-    Clock,
 } from "lucide-react";
 
 const JoinedEvent = ({ event }: { event: Event }) => {

@@ -9,8 +9,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import EditEventDialog from "./EditEventDialog";
 
-export default function JoinedEvent({ event }: { event: Event }) {
+export default function ManageEvent({ event }: { event: Event }) {
     return (
         <article className="group w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-900/10 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-emerald-700">
 
@@ -97,19 +98,30 @@ export default function JoinedEvent({ event }: { event: Event }) {
                     </div>
                 </div>
 
-                {/* Action Button */}
-                <div className="border-t border-emerald-50 pt-4 dark:border-slate-700">
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between gap-3 border-t border-emerald-50 pt-4 dark:border-slate-700">
+
+                    {/* Left Side - View Details */}
                     <Link
                         href={`/upcoming-event/${event._id}`}
-                        className="flex w-full items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
+                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
-                        <span>View Event Details</span>
-
-                        <ArrowUpRight
-                            size={18}
-                            className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        />
+                        <span>View Details</span>
+                        <ArrowUpRight size={18} />
                     </Link>
+
+                    {/* Right Side - Edit & Delete */}
+                    <div className="flex items-center gap-2">
+                        <EditEventDialog event={event} />
+
+                        <button
+                            type="button"
+                            className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-all hover:bg-red-600 hover:text-white dark:bg-red-950/40 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white"
+                        >
+                            Delete
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </article>
