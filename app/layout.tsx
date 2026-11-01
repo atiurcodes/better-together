@@ -1,10 +1,13 @@
 
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Outfit, Inter, Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import Footer from "@/components/layouts/Footer";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -25,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <body className={`${outfit.variable} ${inter.variable} min-h-full flex flex-col antialiased`}>
         <ThemeProvider>
           <Navbar />

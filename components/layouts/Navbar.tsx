@@ -73,14 +73,14 @@ export default function Navbar() {
                     <ThemeToggle />
 
                     <Link
-                        href="/login"
+                        href="/sign-in"
                         className="text-sm font-semibold text-[#244B35] transition-colors hover:text-[#628B65] dark:text-[#E2EDE0] dark:hover:text-[#91B88F]"
                     >
                         Login
                     </Link>
 
                     <Link
-                        href="/register"
+                        href="/sign-up"
                         className="rounded-full bg-[#244B35] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
                     >
                         Join Us <span className="ml-1">↗</span>
@@ -147,7 +147,7 @@ export default function Navbar() {
                         <div className="flex gap-3 border-t border-[#DCE6D8] pt-4 dark:border-[#2D4434]">
 
                             <Link
-                                href="/login"
+                                href="/sign-in"
                                 onClick={() => setIsOpen(false)}
                                 className="flex-1 rounded-full border border-[#244B35] py-2.5 text-center text-sm font-semibold text-[#244B35] transition-colors hover:bg-[#E2EDE0] dark:border-[#628B65] dark:text-[#E2EDE0] dark:hover:bg-[#263C2D]"
                             >
@@ -155,7 +155,7 @@ export default function Navbar() {
                             </Link>
 
                             <Link
-                                href="/register"
+                                href="/sign-up"
                                 onClick={() => setIsOpen(false)}
                                 className="flex-1 rounded-full bg-[#244B35] py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
                             >
