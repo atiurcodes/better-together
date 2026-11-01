@@ -2,15 +2,21 @@
 
 import { eventCategories } from "@/data/allCategory";
 import { eventImages } from "@/data/eventImages";
+import { authClient } from "@/lib/auth-client";
 import { PlusCircle, CalendarDays, MapPin, ImageIcon, Leaf } from "lucide-react";
 import React from "react";
 
 const AddEventPage = () => {
 
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const eventData = Object.fromEntries(formData.entries()) as Record<string, string>;
+        //for collect user email from session
+        eventData.organizerEmail = user?.email || "";
         const res = await fetch('http://localhost:5000/event/add-event', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -196,6 +202,19 @@ const AddEventPage = () => {
                                 placeholder="Tell the community what your event is about..."
                                 className={`${inputClassName} resize-y`}
                             />
+                        </div>
+
+                        {/* user email */}
+                        <div>
+                            <div className={`${inputClassName} flex items-center justify-between`}>
+                                <span className="shrink-0 text-sm text-gray-400">
+                                    Organizer Email attached:
+                                </span>
+
+                                <span className="text-sm text-gray-400">
+                                    {user?.email}
+                                </span>
+                            </div>
                         </div>
 
                         {/* Submit Button */}

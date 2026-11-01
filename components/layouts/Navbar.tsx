@@ -3,26 +3,24 @@ import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button"
-
+} from "@/components/ui/avatar"
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { signOut } from "@/lib/auth-client";
-import { LogOut, UserRound, LayoutDashboard } from "lucide-react";
+import { Button } from "@/components/ui/button"
 
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
+import { CalendarPlus, LayoutDashboard, LogOut, UserRound, Users } from "lucide-react";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -96,26 +94,92 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop Actions */}
-                <ThemeToggle />
-                {user ? (
-                    <Button onClick={handleLogOut} variant="destructive">Logout</Button>
-                ) : (
-                    <div className="hidden items-center gap-3 md:flex">
-                        <Link
-                            href="/sign-in"
-                            className="text-sm font-semibold text-[#244B35] transition-colors hover:text-[#628B65] dark:text-[#E2EDE0] dark:hover:text-[#91B88F]"
-                        >
-                            Login
-                        </Link>
+                <div>
+                    {user ? (
+                        <div className="flex items-center gap-2">
+                            <ThemeToggle />
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="rounded-full outline-none ring-offset-2 transition-all hover:ring-2 hover:ring-emerald-500">
+                                    <Avatar className="size-10 border-2 border-emerald-100">
+                                        <AvatarImage
+                                            src={user.image!}
+                                            alt={user.name}
+                                            className="grayscale"
+                                        />
+                                        <AvatarFallback>U</AvatarFallback>
+                                    </Avatar>
+                                </DropdownMenuTrigger>
 
-                        <Link
-                            href="/sign-up"
-                            className="rounded-full bg-[#244B35] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
-                        >
-                            Join Us <span className="ml-1">↗</span>
-                        </Link>
-                    </div>
-                )}
+                                <DropdownMenuContent
+                                    align="end"
+                                    sideOffset={12}
+                                    className="w-64 overflow-hidden rounded-2xl border border-emerald-100 bg-white p-2 shadow-xl"
+                                >
+                                    {/* User Information */}
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLabel className="px-3 py-3 font-normal">
+                                            <div>
+                                                <p className="text-sm font-bold text-[#244B35]">
+                                                    {user.name}
+                                                </p>
+
+                                                <p className="text-xs text-gray-500">
+                                                    {user.email}
+                                                </p>
+                                            </div>
+                                        </DropdownMenuLabel>
+                                    </DropdownMenuGroup>
+
+                                    <DropdownMenuSeparator className="bg-emerald-100" />
+
+                                    {/* Create Event */}
+                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                        <CalendarPlus className="size-4 text-emerald-700" />
+                                        <Link href='/event/add-event'>Create Event</Link>
+                                    </DropdownMenuItem>
+
+                                    {/* Manage Events */}
+                                    <Link href={`/manage-events`}>
+                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                            <LayoutDashboard className="size-4 text-emerald-700" />
+                                            Manage Events
+                                        </DropdownMenuItem>
+                                    </Link>
+                                    {/* Joined Events */}
+                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                        <Users className="size-4 text-emerald-700" />
+                                        Joined Events
+                                    </DropdownMenuItem>
+
+                                    <DropdownMenuSeparator className="bg-emerald-100" />
+
+                                    {/* Logout */}
+                                    <DropdownMenuItem onClick={handleLogOut} className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-red-600 transition-colors focus:bg-red-50 focus:text-red-600">
+                                        <LogOut className="size-4" />
+                                        Logout
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
+                    ) : (
+                        <div className="hidden items-center gap-3 md:flex">
+                            <ThemeToggle />
+                            <Link
+                                href="/sign-in"
+                                className="text-sm font-semibold text-[#244B35] transition-colors hover:text-[#628B65] dark:text-[#E2EDE0] dark:hover:text-[#91B88F]"
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                href="/sign-up"
+                                className="rounded-full bg-[#244B35] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#628B65]"
+                            >
+                                Join Us <span className="ml-1">↗</span>
+                            </Link>
+                        </div>
+                    )}
+                </div>
 
                 {/* Mobile Menu Button */}
                 <button
