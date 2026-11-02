@@ -3,6 +3,7 @@ import { authClient } from "@/lib/auth-client";
 import { Event } from "@/lib/type";
 import { HeartHandshake } from "lucide-react";
 import React from "react";
+import { toast } from "react-toastify";
 
 const JoinedEventButton = ({ event }: { event: Event }) => {
     const { data: session } = authClient.useSession();
@@ -10,6 +11,10 @@ const JoinedEventButton = ({ event }: { event: Event }) => {
 
     const handleJoinedEvent = async (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
+        if (!user) {
+            toast.error("Please login first to join this event!");
+            return;
+        }
         console.log(event);
         const { _id, ...allevent } = event;
         const data = {
