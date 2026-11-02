@@ -5,6 +5,7 @@ import { Event } from "@/lib/type";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { CalendarDays, Plus, Sparkles } from "lucide-react";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const ManageEventPage = async () => {
     const session = await auth.api.getSession({
@@ -12,10 +13,13 @@ const ManageEventPage = async () => {
     });
 
     const user = session?.user;
-
+    const token = await getTokenFromServer()
     const res = await fetch(
         `http://localhost:5000/my-event/${user?.email}`,
         {
+            headers: {
+                authorization: `Bearer ${token}`
+            },
             cache: "no-store",
         }
     );

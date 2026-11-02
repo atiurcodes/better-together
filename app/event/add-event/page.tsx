@@ -3,6 +3,7 @@
 import { eventCategories } from "@/data/allCategory";
 import { eventImages } from "@/data/eventImages";
 import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { PlusCircle, CalendarDays, MapPin, ImageIcon, Leaf } from "lucide-react";
 import React from "react";
 
@@ -13,13 +14,18 @@ const AddEventPage = () => {
 
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const token = await getTokenFromClient();
         const formData = new FormData(e.currentTarget);
         const eventData = Object.fromEntries(formData.entries()) as Record<string, string>;
         //for collect user email from session
         eventData.organizerEmail = user?.email || "";
+
         const res = await fetch('http://localhost:5000/event/add-event', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(eventData)
         });
         const result = await res.json();

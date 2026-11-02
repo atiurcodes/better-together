@@ -15,16 +15,21 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function DeleteEventDialog({ event }: { event: Event }) {
     const [open, setOpen] = useState(false);
     const router = useRouter();
 
     const handleDeleteEvent = async () => {
+        const token = await getTokenFromClient();
         try {
             const res = await fetch(`http://localhost:5000/delete-event/${event._id}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
                 }
             );
 

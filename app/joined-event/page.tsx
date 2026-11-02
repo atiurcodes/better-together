@@ -1,11 +1,11 @@
 
-
 import { auth } from "@/lib/auth";
 import { Event } from "@/lib/type";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { CalendarDays, Compass, Sparkles } from "lucide-react";
 import JoinedEvent from "@/components/events/JoinedEvent";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const JoinedEventsPage = async () => {
     const session = await auth.api.getSession({
@@ -13,9 +13,14 @@ const JoinedEventsPage = async () => {
     });
 
     const user = session?.user;
+    // jwt token function call
+    const token = await getTokenFromServer();
 
     const res = await fetch(`http://localhost:5000/joined-events/${user?.email}`,
         {
+            headers: {
+                authorization: `Bearer ${token}`
+            },
             cache: "no-store",
         }
     );

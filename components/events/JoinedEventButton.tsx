@@ -1,5 +1,6 @@
 'use client'
 import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { Event } from "@/lib/type";
 import { HeartHandshake } from "lucide-react";
 import React from "react";
@@ -11,6 +12,7 @@ const JoinedEventButton = ({ event }: { event: Event }) => {
 
     const handleJoinedEvent = async (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
+        const token = await getTokenFromClient();
         if (!user) {
             toast.error("Please login first to join this event!");
             return;
@@ -26,7 +28,10 @@ const JoinedEventButton = ({ event }: { event: Event }) => {
         }
         const res = await fetch(`http://localhost:5000/join-event`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         });
         const result = await res.json();

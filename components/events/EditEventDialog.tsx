@@ -20,6 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { eventImages } from "@/data/eventImages";
 import Image from "next/image";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export default function EditEventDialog({ event }: { event: Event }) {
     const [open, setOpen] = useState(false);
@@ -28,12 +29,15 @@ export default function EditEventDialog({ event }: { event: Event }) {
 
     const handleUpdateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        const token = await getTokenFromClient();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries()) as Record<string, string>;
         const res = await fetch(`http://localhost:5000/my-event/edit/${event._id}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         });
         if (!res.ok) {

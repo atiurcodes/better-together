@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Event } from "@/lib/type";
 import UpcomingCard from "@/components/events/UpcomingCard";
 import { Plus, CalendarDays, Sparkles } from "lucide-react";
-import EventFilter from "@/components/events/EventFilter";
 
 const page = async () => {
     const res = await fetch("http://localhost:5000/upcoming-event", {
