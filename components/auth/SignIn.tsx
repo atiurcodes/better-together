@@ -122,7 +122,7 @@ export default function SignUp() {
                                 variant="outline"
                                 disabled={isLoading}
                                 type="button"
-                                className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                                className="h-11 rounded-xl cursor-pointer border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +203,7 @@ export default function SignUp() {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="h-12 w-full rounded-xl bg-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-emerald-600/30"
+                                className="h-12 w-full cursor-pointer rounded-xl bg-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-emerald-600/30"
                             >
                                 {isLoading ? "Logging In..." : "Login Account"}
                             </Button>

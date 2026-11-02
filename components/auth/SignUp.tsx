@@ -23,26 +23,28 @@ import React, { useState } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { profileImages } from "@/data/profileImages";
 
 export default function SignUp() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [errors, setErrors] = useState({
         name: "",
         email: "",
         password: "",
-        // imageUrl: "",
+        imageUrl: "",
     });
 
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        setIsLoading(true);
         setErrors({
             name: "",
             email: "",
             password: "",
-            // imageUrl: "",
+            imageUrl: "",
         });
 
         const formData = new FormData(e.currentTarget);
@@ -74,23 +76,19 @@ export default function SignUp() {
         }
 
         // Photo URL Validation
-        // try {
-        //     const url = new URL(imageUrl);
-        //
-        //     if (!["http:", "https:"].includes(url.protocol)) {
-        //         setErrors(prev => ({
-        //             ...prev,
-        //             imageUrl: "Please enter a valid photo URL.",
-        //         }));
-        //         return;
-        //     }
-        // } catch {
-        //     setErrors(prev => ({
-        //         ...prev,
-        //         imageUrl: "Please enter a valid photo URL.",
-        //     }));
-        //     return;
-        // }
+        try {
+            const url = new URL(imageUrl);
+
+            if (!["http:", "https:"].includes(url.protocol)) {
+                throw new Error("Invalid image URL");
+            }
+        } catch {
+            setErrors(prev => ({
+                ...prev,
+                imageUrl: "Please enter a valid photo URL.",
+            }));
+            return;
+        }
 
         // Password Validation
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -109,7 +107,7 @@ export default function SignUp() {
                 name,
                 email,
                 password,
-                // image: imageUrl,
+                image: imageUrl,
             });
 
             if (error) {
@@ -123,10 +121,14 @@ export default function SignUp() {
             }
         } catch {
             toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleGoogleSignUp = async () => {
+        setIsLoading(true);
+
         try {
             await signIn.social({
                 provider: "google",
@@ -135,6 +137,7 @@ export default function SignUp() {
         } catch (error) {
             console.log(error);
             toast.error("Google authentication failed!");
+            setIsLoading(false);
         }
     };
 
@@ -160,8 +163,9 @@ export default function SignUp() {
                             <Button
                                 onClick={handleGoogleSignUp}
                                 variant="outline"
+                                disabled={isLoading}
                                 type="button"
-                                className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                                className="h-11 rounded-xl cursor-pointer border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +177,7 @@ export default function SignUp() {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                Google
+                                {isLoading ? "Connecting..." : "Google"}
                             </Button>
                         </Field>
 
@@ -269,22 +273,35 @@ export default function SignUp() {
                         </Field>
 
                         {/* Image URL */}
-                        {/* 
+
                         <Field>
-                            <FieldLabel htmlFor="imageUrl" className="font-semibold text-slate-700 dark:text-slate-200">
-                                Profile Image URL
+                            <FieldLabel
+                                htmlFor="imageUrl"
+                                className="font-semibold text-slate-700 dark:text-slate-200"
+                            >
+                                Profile Image
                             </FieldLabel>
 
                             <div className="relative">
                                 <ImagePlus className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
 
-                                <Input
+                                <select
                                     id="imageUrl"
                                     name="imageUrl"
-                                    type="url"
-                                    placeholder="https://example.com/image.jpg"
-                                    className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
-                                />
+                                    defaultValue=""
+                                    required
+                                    className="h-12 w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-700 outline-none transition-colors focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+                                >
+                                    <option value="" disabled>
+                                        Select your profile image
+                                    </option>
+
+                                    {profileImages.map((image) => (
+                                        <option key={image.url} value={image.url}>
+                                            {image.url}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
                             {errors.imageUrl && (
@@ -293,15 +310,16 @@ export default function SignUp() {
                                 </p>
                             )}
                         </Field>
-                        */}
+
 
                         {/* Submit */}
                         <Field className="gap-4 pt-2">
                             <Button
                                 type="submit"
-                                className="h-12 w-full rounded-xl bg-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-emerald-600/30"
+                                disabled={isLoading}
+                                className="h-12 w-full rounded-xl cursor-pointer bg-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-emerald-600/30"
                             >
-                                Create Account
+                                {isLoading ? "Creating Account..." : "Create Account"}
                             </Button>
 
                             <FieldDescription className="text-center text-sm text-slate-500 dark:text-slate-400">

@@ -6,6 +6,7 @@ import { authClient } from "@/lib/auth-client";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { PlusCircle, CalendarDays, MapPin, ImageIcon, Leaf } from "lucide-react";
 import React from "react";
+import { toast } from "react-toastify";
 
 const AddEventPage = () => {
 
@@ -14,23 +15,42 @@ const AddEventPage = () => {
 
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const token = await getTokenFromClient();
-        const formData = new FormData(e.currentTarget);
-        const eventData = Object.fromEntries(formData.entries()) as Record<string, string>;
-        //for collect user email from session
-        eventData.organizerEmail = user?.email || "";
 
-        const res = await fetch('http://localhost:5000/event/add-event', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(eventData)
-        });
-        const result = await res.json();
-        console.log(result);
-    }
+        // Capture the form before the async operation
+        const form = e.currentTarget;
+
+        try {
+            const token = await getTokenFromClient();
+
+            const formData = new FormData(form);
+            const eventData = Object.fromEntries(formData.entries()) as Record<string, string>;
+
+            // Collect user email from session
+            eventData.organizerEmail = user?.email || "";
+
+            const res = await fetch("http://localhost:5000/event/add-event", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(eventData)
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                toast.success(result.message || "Event created successfully!");
+                form.reset();
+            } else {
+                toast.error(result.message || "Failed to create event!");
+            }
+
+        } catch (error) {
+            console.error("Event creation error:", error);
+            toast.error("Something went wrong. Please try again!");
+        }
+    };
 
     const inputClassName =
         "w-full rounded-xl border border-[#DCE6DC] bg-white px-4 py-3 text-sm text-[#183D2A] placeholder:text-[#9AA99B] outline-none transition-all focus:border-[#397D48] focus:ring-2 focus:ring-[#397D48]/15 dark:border-[#344B39] dark:bg-[#1B2B20] dark:text-[#E6F2E5] dark:placeholder:text-[#829585] dark:focus:border-[#86C995] dark:focus:ring-[#86C995]/15";
@@ -227,7 +247,7 @@ const AddEventPage = () => {
                         <div className="border-t border-[#E8EEE6] pt-6 dark:border-[#304334]">
                             <button
                                 type="submit"
-                                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#245C43] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#194832] hover:shadow-lg hover:shadow-[#245C43]/15 focus:outline-none focus:ring-2 focus:ring-[#397D48] focus:ring-offset-2 dark:bg-[#397D48] dark:hover:bg-[#4B965B] dark:focus:ring-offset-[#14251B] sm:w-auto"
+                                className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#245C43] px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#194832] hover:shadow-lg hover:shadow-[#245C43]/15 focus:outline-none focus:ring-2 focus:ring-[#397D48] focus:ring-offset-2 dark:bg-[#397D48] dark:hover:bg-[#4B965B] dark:focus:ring-offset-[#14251B] sm:w-auto"
                             >
                                 <PlusCircle size={18} />
                                 Create Event
