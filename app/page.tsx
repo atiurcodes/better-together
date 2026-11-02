@@ -1,3 +1,4 @@
+import GoogleAuthToast from "@/components/auth/GoogleAuthToast";
 import Features from "@/components/home/Featured";
 import Gallery from "@/components/home/Gallary";
 import Hero from "@/components/home/Hero";
@@ -19,6 +20,7 @@ export default async function Home() {
 
   return (
     <div>
+      <GoogleAuthToast />
       <Hero />
       <Features />
 

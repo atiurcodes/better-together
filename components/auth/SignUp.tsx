@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,33 +19,124 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ImagePlus, LockKeyhole, Mail, UserRound } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
+    const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        password: "",
+        // imageUrl: "",
+    });
+
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        setErrors({
+            name: "",
+            email: "",
+            password: "",
+            // imageUrl: "",
+        });
+
         const formData = new FormData(e.currentTarget);
-        const userInfo = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const { data, error } = await signUp.email({
-            name: userInfo.name,
-            email: userInfo.email,
-            password: userInfo.password,
-            // image: userInfo.ImageUrl
-        })
-        console.log(data, error);
-        if (data) {
-            redirect('/')
+
+        const userInfo = Object.fromEntries(
+            formData.entries()
+        ) as Record<string, string>;
+
+        const { name, email, imageUrl, password } = userInfo;
+
+        // Name Validation
+        if (!name.trim()) {
+            setErrors(prev => ({
+                ...prev,
+                name: "Please enter your full name.",
+            }));
+            return;
         }
-    }
+
+        // Email Validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            setErrors(prev => ({
+                ...prev,
+                email: "Please enter a valid email address.",
+            }));
+            return;
+        }
+
+        // Photo URL Validation
+        // try {
+        //     const url = new URL(imageUrl);
+        //
+        //     if (!["http:", "https:"].includes(url.protocol)) {
+        //         setErrors(prev => ({
+        //             ...prev,
+        //             imageUrl: "Please enter a valid photo URL.",
+        //         }));
+        //         return;
+        //     }
+        // } catch {
+        //     setErrors(prev => ({
+        //         ...prev,
+        //         imageUrl: "Please enter a valid photo URL.",
+        //     }));
+        //     return;
+        // }
+
+        // Password Validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setErrors(prev => ({
+                ...prev,
+                password: "Password must contain uppercase, lowercase and at least 6 characters.",
+            }));
+            return;
+        }
+
+        // Registration
+        try {
+            const { data, error } = await signUp.email({
+                name,
+                email,
+                password,
+                // image: imageUrl,
+            });
+
+            if (error) {
+                toast.error(error.message || "Registration failed.");
+                return;
+            }
+
+            if (data) {
+                toast.success("Registration successful!");
+                router.push("/");
+            }
+        } catch {
+            toast.error("Something went wrong. Please try again.");
+        }
+    };
 
     const handleGoogleSignUp = async () => {
-        const resData = await signIn.social({
-            provider: 'google'
-        })
-        console.log(resData);
-    }
+        try {
+            await signIn.social({
+                provider: "google",
+                callbackURL: "/?googleSuccess=true",
+            });
+        } catch (error) {
+            console.log(error);
+            toast.error("Google authentication failed!");
+        }
+    };
 
     return (
         <Card className="border-0 bg-transparent shadow-none">
@@ -60,7 +152,7 @@ export default function SignUp() {
             </CardHeader>
 
             <CardContent>
-                <form onSubmit={handleOnSubmit}>
+                <form onSubmit={handleOnSubmit} noValidate>
                     <FieldGroup className="gap-5">
 
                         {/* Social Signup */}
@@ -103,10 +195,15 @@ export default function SignUp() {
                                     type="text"
                                     name="name"
                                     placeholder="Enter your full name"
-                                    required
                                     className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
                                 />
                             </div>
+
+                            {errors.name && (
+                                <p className="text-sm text-red-500">
+                                    {errors.name}
+                                </p>
+                            )}
                         </Field>
 
                         {/* Email */}
@@ -123,10 +220,15 @@ export default function SignUp() {
                                     type="email"
                                     name="email"
                                     placeholder="you@example.com"
-                                    required
                                     className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
                                 />
                             </div>
+
+                            {errors.email && (
+                                <p className="text-sm text-red-500">
+                                    {errors.email}
+                                </p>
+                            )}
                         </Field>
 
                         {/* Password */}
@@ -141,17 +243,35 @@ export default function SignUp() {
                                 <Input
                                     id="password"
                                     name="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Create a strong password"
-                                    required
-                                    className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
+                                    className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 pr-11 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
                                 />
+
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={18} />
+                                    ) : (
+                                        <Eye size={18} />
+                                    )}
+                                </button>
                             </div>
+
+                            {errors.password && (
+                                <p className="text-sm text-red-500">
+                                    {errors.password}
+                                </p>
+                            )}
                         </Field>
 
                         {/* Image URL */}
-                        {/* <Field>
-                            <FieldLabel htmlFor="ImageUrl" className="font-semibold text-slate-700 dark:text-slate-200">
+                        {/* 
+                        <Field>
+                            <FieldLabel htmlFor="imageUrl" className="font-semibold text-slate-700 dark:text-slate-200">
                                 Profile Image URL
                             </FieldLabel>
 
@@ -159,15 +279,21 @@ export default function SignUp() {
                                 <ImagePlus className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
 
                                 <Input
-                                    id="ImageUrl"
-                                    name="ImageUrl"
+                                    id="imageUrl"
+                                    name="imageUrl"
                                     type="url"
                                     placeholder="https://example.com/image.jpg"
-                                    required
                                     className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
                                 />
                             </div>
-                        </Field> */}
+
+                            {errors.imageUrl && (
+                                <p className="text-sm text-red-500">
+                                    {errors.imageUrl}
+                                </p>
+                            )}
+                        </Field>
+                        */}
 
                         {/* Submit */}
                         <Field className="gap-4 pt-2">

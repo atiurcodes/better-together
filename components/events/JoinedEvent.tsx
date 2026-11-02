@@ -80,7 +80,6 @@ const JoinedEvent = ({ event }: { event: Event }) => {
                             </p>
                         </div>
                     </div>
-
                 </div>
 
                 {/* Footer */}

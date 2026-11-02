@@ -17,32 +17,80 @@ import {
     FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { LockKeyhole, Mail } from "lucide-react";
-import React from "react";
+import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
+import React, { useState } from "react";
 import { signIn } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
+    const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({
+        email: "",
+        password: "",
+    });
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const userInfo = Object.fromEntries(formData.entries()) as Record<string, string>;
+        const { email, password } = userInfo;
+
+        // Clear previous errors
+        setErrors({
+            email: "",
+            password: "",
+        });
+
+        let hasError = false;
+
+        if (
+            !email.trim() ||
+            !password.trim() ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        ) {
+            setErrors({
+                email: "",
+                password: "Invalid email or password",
+            });
+
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        // API call
         const { data, error } = await signIn.email({
-            email: userInfo.email,
-            password: userInfo.password,
-        })
+            email,
+            password,
+        });
+
         console.log(data, error);
+        if (error) {
+            setErrors({
+                email: "",
+                password: "Invalid email or password",
+            });
+            return;
+        }
+
         if (data) {
-            redirect('/')
+            toast.success("Login successful!");
+            router.push("/");
         }
     }
 
-    const handleGoogleSignUp = async () => {
-        const resData = await signIn.social({
-            provider: 'google'
-        })
-        console.log(resData);
-    }
+    const handleGoogleLogin = async () => {
+        try {
+            await signIn.social({
+                provider: "google",
+                callbackURL: "/?loginSuccess=true",
+            });
+        } catch (error) {
+            console.log(error);
+            toast.error("Google login failed!");
+        }
+    };
 
     return (
         <Card className="border-0 bg-transparent shadow-none">
@@ -64,7 +112,7 @@ export default function SignUp() {
                         {/* Social Signin */}
                         <Field>
                             <Button
-                                onClick={handleGoogleSignUp}
+                                onClick={handleGoogleLogin}
                                 variant="outline"
                                 type="button"
                                 className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
@@ -119,12 +167,28 @@ export default function SignUp() {
                                 <Input
                                     id="password"
                                     name="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Create a strong password"
-                                    required
-                                    className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
+                                    className="h-12 rounded-xl border-slate-200 bg-slate-50 pl-10 pr-11 text-sm focus-visible:border-emerald-500 focus-visible:ring-emerald-500/20 dark:border-slate-700 dark:bg-slate-950"
                                 />
+
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={18} />
+                                    ) : (
+                                        <Eye size={18} />
+                                    )}
+                                </button>
                             </div>
+                            {errors.password && (
+                                <p className="text-center text-sm text-red-500">
+                                    {errors.password}
+                                </p>
+                            )}
                         </Field>
 
                         {/* Submit */}
