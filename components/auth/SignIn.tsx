@@ -26,61 +26,66 @@ import { toast } from "react-toastify";
 export default function SignUp() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({
         email: "",
         password: "",
     });
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const userInfo = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const { email, password } = userInfo;
+        setIsLoading(true);
 
-        // Clear previous errors
-        setErrors({
-            email: "",
-            password: "",
-        });
+        try {
+            const formData = new FormData(e.currentTarget);
+            const userInfo = Object.fromEntries(formData.entries()) as Record<string, string>;
+            const { email, password } = userInfo;
 
-        let hasError = false;
-
-        if (
-            !email.trim() ||
-            !password.trim() ||
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-        ) {
             setErrors({
                 email: "",
-                password: "Invalid email or password",
+                password: "",
             });
 
-            hasError = true;
-        }
+            if (
+                !email.trim() ||
+                !password.trim() ||
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+            ) {
+                setErrors({
+                    email: "",
+                    password: "Invalid email or password",
+                });
+                return;
+            }
 
-        if (hasError) return;
-
-        // API call
-        const { data, error } = await signIn.email({
-            email,
-            password,
-        });
-
-        console.log(data, error);
-        if (error) {
-            setErrors({
-                email: "",
-                password: "Invalid email or password",
+            const { data, error } = await signIn.email({
+                email,
+                password,
             });
-            return;
-        }
 
-        if (data) {
-            toast.success("Login successful!");
-            router.push("/");
+            if (error) {
+                setErrors({
+                    email: "",
+                    password: "Invalid email or password",
+                });
+                return;
+            }
+
+            if (data) {
+                toast.success("Login successful!");
+                router.push("/");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong!");
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
+
 
     const handleGoogleLogin = async () => {
+        setIsLoading(true);
+
         try {
             await signIn.social({
                 provider: "google",
@@ -89,6 +94,7 @@ export default function SignUp() {
         } catch (error) {
             console.log(error);
             toast.error("Google login failed!");
+            setIsLoading(false);
         }
     };
 
@@ -114,6 +120,7 @@ export default function SignUp() {
                             <Button
                                 onClick={handleGoogleLogin}
                                 variant="outline"
+                                disabled={isLoading}
                                 type="button"
                                 className="h-11 rounded-xl border-slate-200 bg-white font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
                             >
@@ -127,7 +134,7 @@ export default function SignUp() {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                Google
+                                {isLoading ? "Connecting..." : "Google"}
                             </Button>
                         </Field>
 
@@ -195,9 +202,10 @@ export default function SignUp() {
                         <Field className="gap-4 pt-2">
                             <Button
                                 type="submit"
+                                disabled={isLoading}
                                 className="h-12 w-full rounded-xl bg-emerald-600 text-base font-semibold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-emerald-600/30"
                             >
-                                Login Account
+                                {isLoading ? "Logging In..." : "Login Account"}
                             </Button>
 
                             <FieldDescription className="text-center text-sm text-slate-500 dark:text-slate-400">

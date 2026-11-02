@@ -1,9 +1,10 @@
+
 import GoogleAuthToast from "@/components/auth/GoogleAuthToast";
 import Features from "@/components/home/Featured";
 import Gallery from "@/components/home/Gallary";
 import Hero from "@/components/home/Hero";
 import Newsletter from "@/components/home/NewsLetter";
-import RecentUpcomingCard from "@/components/home/RecentUpcoming";
+import RecentUpcomingCard from "@/components/home/RecentUpcomingCard";
 import { Event } from "@/lib/type";
 
 export default async function Home() {
@@ -58,17 +59,18 @@ export default async function Home() {
               <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
                 No Upcoming Events Yet
               </h3>
+
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                 Stay tuned! New events will be announced soon.
               </p>
             </div>
           )}
 
+          <Gallery />
+          <Newsletter />
+
         </div>
       </section>
-
-      <Gallery />
-      <Newsletter />
     </div>
   );
 }

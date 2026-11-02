@@ -1,5 +1,5 @@
 
-export default function UpcomingCardSkeleton() {
+export default function CardSkeleton() {
     return (
         <article className="w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
 
