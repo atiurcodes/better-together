@@ -9,7 +9,7 @@ import { Event } from "@/lib/type";
 
 export default async function Home() {
   const res = await fetch(
-    "http://localhost:5000/recent-upcoming-event",
+    `${process.env.NEXT_PUBLIC_API_URL}/recent-upcoming-event`,
     { cache: "no-store" }
   );
 

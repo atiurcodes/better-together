@@ -5,7 +5,7 @@ import UpcomingCard from "@/components/events/UpcomingCard";
 import { Plus, CalendarDays, Sparkles } from "lucide-react";
 
 const page = async () => {
-    const res = await fetch("http://localhost:5000/upcoming-event", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-event`, {
         cache: "no-store",
     });
 

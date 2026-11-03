@@ -28,7 +28,7 @@ const AddEventPage = () => {
             // Collect user email from session
             eventData.organizerEmail = user?.email || "";
 
-            const res = await fetch("http://localhost:5000/event/add-event", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/add-event`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

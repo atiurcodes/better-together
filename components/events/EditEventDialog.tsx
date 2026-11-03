@@ -32,7 +32,7 @@ export default function EditEventDialog({ event }: { event: Event }) {
         const token = await getTokenFromClient();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const res = await fetch(`http://localhost:5000/my-event/edit/${event._id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-event/edit/${event._id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
