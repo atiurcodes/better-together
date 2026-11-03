@@ -108,84 +108,92 @@ export default function Navbar() {
                     {user ? (
                         <>
                             <ThemeToggle />
-
-                            <DropdownMenu>
-                                <DropdownMenuTrigger
-                                    className="group relative mt-1 cursor-pointer rounded-full outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#628B65] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#14251B]"
-                                >
-                                    <Avatar className="size-10 border-2 border-[#A8C4A5] bg-[#E2EDE0] shadow-sm transition-all duration-200 group-hover:border-[#397D48] group-hover:shadow-md dark:border-[#3D5944] dark:bg-[#263C2D]">
-                                        <AvatarImage
-                                            src={user.image || ""}
-                                            alt={user.name}
-                                            className="object-cover"
-                                        />
-
-                                        <AvatarFallback className="bg-[#E2EDE0] text-sm font-bold text-[#244B35] dark:bg-[#263C2D] dark:text-[#E2EDE0]">
-                                            {user.name.split(" ")[0].charAt(0).toUpperCase()}
-                                        </AvatarFallback>
-                                    </Avatar>
-
-                                    <span className="pointer-events-none absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg border border-[#DCE6D8] bg-white px-3 py-1.5 text-xs font-semibold text-[#244B35] opacity-0 shadow-lg transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 dark:border-[#3D5944] dark:bg-[#263C2D] dark:text-[#E2EDE0]">
-                                        {user.name}
-                                    </span>
-                                </DropdownMenuTrigger>
-
-                                <DropdownMenuContent
-                                    align="end"
-                                    sideOffset={12}
-                                    className="w-64 overflow-hidden rounded-2xl border border-emerald-100 bg-white p-2 shadow-xl"
-                                >
-                                    {/* User Information */}
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLabel className="px-3 py-3 font-normal">
-                                            <p className="text-sm font-bold text-[#244B35]">
-                                                {user.name}
-                                            </p>
-
-                                            <p className="text-xs text-gray-500">
-                                                {user.email}
-                                            </p>
-                                        </DropdownMenuLabel>
-                                    </DropdownMenuGroup>
-
-                                    <DropdownMenuSeparator className="bg-emerald-100" />
-
-                                    {/* Create Event */}
-                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                        <CalendarPlus className="size-4 text-emerald-700" />
-                                        <Link href="/event/add-event" className="flex-1">
-                                            Create Event
-                                        </Link>
-                                    </DropdownMenuItem>
-
-                                    {/* Manage Events */}
-                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                        <LayoutDashboard className="size-4 text-emerald-700" />
-                                        <Link href="/manage-events" className="flex-1">
-                                            Manage Events
-                                        </Link>
-                                    </DropdownMenuItem>
-
-                                    {/* Joined Events */}
-                                    <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                        <Users className="size-4 text-emerald-700" />
-                                        <Link href="/joined-event" className="flex-1">
-                                            Joined Events
-                                        </Link>
-                                    </DropdownMenuItem>
-
-                                    <DropdownMenuSeparator className="bg-emerald-100" />
-
-                                    {/* Logout */}
-                                    <DropdownMenuItem
-                                        onClick={handleLogOut}
-                                        className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 font-semibold text-red-600 transition-colors focus:bg-red-50 focus:text-red-600"
+                            <div className="flex items-center gap-2">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger
+                                        className="group relative mt-1 cursor-pointer rounded-full outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#628B65] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#14251B]"
                                     >
-                                        <LogOut className="size-4" />
-                                        Logout
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                                        <Avatar className="size-10 border-2 border-[#A8C4A5] bg-[#E2EDE0] shadow-sm transition-all duration-200 group-hover:border-[#397D48] group-hover:shadow-md dark:border-[#3D5944] dark:bg-[#263C2D]">
+                                            <AvatarImage
+                                                src={user.image || ""}
+                                                alt={user.name}
+                                                className="object-cover"
+                                            />
+
+                                            <AvatarFallback className="bg-[#E2EDE0] text-sm font-bold text-[#244B35] dark:bg-[#263C2D] dark:text-[#E2EDE0]">
+                                                {user.name.split(" ")[0].charAt(0).toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+
+                                        <span className="pointer-events-none absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg border border-[#DCE6D8] bg-white px-3 py-1.5 text-xs font-semibold text-[#244B35] opacity-0 shadow-lg transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 dark:border-[#3D5944] dark:bg-[#263C2D] dark:text-[#E2EDE0]">
+                                            {user.name}
+                                        </span>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        align="end"
+                                        sideOffset={12}
+                                        className="w-64 overflow-hidden rounded-2xl border border-emerald-100 bg-white p-2 shadow-xl"
+                                    >
+                                        {/* User Information */}
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuLabel className="px-3 py-3 font-normal">
+                                                <p className="text-sm font-bold text-[#244B35]">
+                                                    {user.name}
+                                                </p>
+
+                                                <p className="text-xs text-gray-500">
+                                                    {user.email}
+                                                </p>
+                                            </DropdownMenuLabel>
+                                        </DropdownMenuGroup>
+
+                                        <DropdownMenuSeparator className="bg-emerald-100" />
+
+                                        {/* Create Event */}
+                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                            <CalendarPlus className="size-4 text-emerald-700" />
+                                            <Link href="/event/add-event" className="flex-1">
+                                                Create Event
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        {/* Manage Events */}
+                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                            <LayoutDashboard className="size-4 text-emerald-700" />
+                                            <Link href="/manage-events" className="flex-1">
+                                                Manage Events
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        {/* Joined Events */}
+                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
+                                            <Users className="size-4 text-emerald-700" />
+                                            <Link href="/joined-event" className="flex-1">
+                                                Joined Events
+                                            </Link>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuSeparator className="bg-emerald-100" />
+
+                                        {/* Logout */}
+                                        <DropdownMenuItem
+                                            onClick={handleLogOut}
+                                            className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 font-semibold text-red-600 transition-colors focus:bg-red-50 focus:text-red-600"
+                                        >
+                                            <LogOut className="size-4" />
+                                            Logout
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <Button
+                                    onClick={handleLogOut}
+                                    variant="outline"
+                                    className="gap-2 cursor-pointer border-red-200 text-red-600 transition-colors hover:bg-red-50 hover:text-red-700 dark:border-[#3D5944] dark:text-[#E2EDE0] dark:hover:bg-[#263C2D]"
+                                >
+                                    <LogOut className="size-4" />
+                                    Logout
+                                </Button>
+                            </div>
                         </>
                     ) : (
                         <>
@@ -242,113 +250,107 @@ export default function Navbar() {
             {/* Mobile Navigation */}
 
             {/* Mobile Navigation */}
-            {isOpen && (
-                <div className="border-t border-[#DCE6D8] bg-[#F3F7EF] px-5 py-5 dark:border-[#2D4434] dark:bg-[#14251B] md:hidden">
+            {
+                isOpen && (
+                    <div className="border-t border-[#DCE6D8] bg-[#F3F7EF] px-5 py-5 dark:border-[#2D4434] dark:bg-[#14251B] md:hidden">
 
-                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4">
 
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                onClick={() => setIsOpen(false)}
-                                className="text-sm font-medium text-[#526B55] transition-colors hover:text-[#397D48] dark:text-[#BBD3B5] dark:hover:text-[#91B88F]"
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-sm font-medium text-[#526B55] transition-colors hover:text-[#397D48] dark:text-[#BBD3B5] dark:hover:text-[#91B88F]"
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
 
-                        {/* Mobile Actions */}
-                        <div className="flex flex-col gap-3 border-t border-[#DCE6D8] pt-4 dark:border-[#2D4434]">
+                            {/* Mobile Actions */}
+                            <div className="flex flex-col gap-3 border-t border-[#DCE6D8] pt-4 dark:border-[#2D4434]">
 
-                            {user ? (
-                                <>
-                                    {/* User Information */}
-                                    <div className="flex items-center gap-3">
-                                        <Avatar className="size-10 border-2 border-[#A8C4A5]">
-                                            <AvatarImage
-                                                src={user.image || ""}
-                                                alt={user.name}
-                                            />
-                                            <AvatarFallback>
-                                                {user.name.charAt(0).toUpperCase()}
-                                            </AvatarFallback>
-                                        </Avatar>
+                                {user ? (
+                                    <>
+                                        {/* User Information */}
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="size-10 border-2 border-[#A8C4A5]">
+                                                <AvatarImage
+                                                    src={user.image || ""}
+                                                    alt={user.name}
+                                                />
+                                                <AvatarFallback>
+                                                    {user.name.charAt(0).toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
 
-                                        <div className="min-w-0">
-                                            <p className="text-sm font-semibold text-[#244B35] dark:text-[#E2EDE0]">
-                                                {user.name}
-                                            </p>
-                                            <p className="truncate text-xs text-gray-500 dark:text-gray-400">
-                                                {user.email}
-                                            </p>
+                                            <div className="min-w-0">
+                                                <p className="text-sm font-semibold text-[#244B35] dark:text-[#E2EDE0]">
+                                                    {user.name}
+                                                </p>
+                                                <p className="truncate text-xs text-gray-500 dark:text-gray-400">
+                                                    {user.email}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* Create Event */}
-                                    <Link
-                                        href="/event/add-event"
-                                        onClick={() => setIsOpen(false)}
-                                        className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
-                                    >
-                                        Create Event
-                                    </Link>
+                                        {/* Create Event */}
+                                        <Link
+                                            href="/event/add-event"
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
+                                        >
+                                            Create Event
+                                        </Link>
 
-                                    {/* Manage Events */}
-                                    <Link
-                                        href="/manage-events"
-                                        onClick={() => setIsOpen(false)}
-                                        className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
-                                    >
-                                        Manage Events
-                                    </Link>
+                                        {/* Manage Events */}
+                                        <Link
+                                            href="/manage-events"
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
+                                        >
+                                            Manage Events
+                                        </Link>
 
-                                    {/* Joined Events */}
-                                    <Link
-                                        href="/joined-event"
-                                        onClick={() => setIsOpen(false)}
-                                        className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
-                                    >
-                                        Joined Events
-                                    </Link>
+                                        {/* Joined Events */}
+                                        <Link
+                                            href="/joined-event"
+                                            onClick={() => setIsOpen(false)}
+                                            className="text-sm font-medium text-[#526B55] dark:text-[#BBD3B5]"
+                                        >
+                                            Joined Events
+                                        </Link>
 
-                                    {/* Logout */}
-                                    <Button
-                                        onClick={() => {
-                                            setIsOpen(false);
-                                            handleLogOut();
-                                        }}
-                                        variant="outline"
-                                        className="w-full cursor-pointer gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
-                                    >
-                                        <LogOut className="size-4" />
-                                        Logout
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        href="/sign-in"
-                                        onClick={() => setIsOpen(false)}
-                                        className="rounded-full border border-[#244B35] py-2.5 text-center text-sm font-semibold text-[#244B35] dark:border-[#628B65] dark:text-[#E2EDE0]"
-                                    >
-                                        Login
-                                    </Link>
-
-                                    <Link
-                                        href="/sign-up"
-                                        onClick={() => setIsOpen(false)}
-                                        className="rounded-full bg-[#244B35] py-2.5 text-center text-sm font-semibold text-white dark:bg-[#397D48]"
-                                    >
-                                        Join Us ↗
-                                    </Link>
-                                </>
-                            )}
+                                        {/* Logout */}
+                                        <Button
+                                            onClick={() => {
+                                                setIsOpen(false);
+                                                handleLogOut();
+                                            }}
+                                            variant="outline"
+                                            className="w-full cursor-pointer gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                                        >
+                                            <LogOut className="size-4" />
+                                            Logout
+                                        </Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href="/sign-in"
+                                            onClick={() => setIsOpen(false)}
+                                            className="rounded-full border border-[#244B35] py-2.5 text-center text-sm font-semibold text-[#244B35] dark:border-[#628B65] dark:text-[#E2EDE0]"
+                                        >
+                                            Login
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
-        </header>
+        </header >
     );
 }

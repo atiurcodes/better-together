@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Event } from "@/lib/type";
 import UpcomingCard from "@/components/events/UpcomingCard";
 import { Plus, CalendarDays, Sparkles } from "lucide-react";
+import EventFilter from "@/components/events/EventFilter";
 
 const page = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-event`, {
@@ -51,19 +52,9 @@ const page = async () => {
                     </Link>
                 </div>
 
-                {/* Filtered event */}
-                {/* <EventFilter events={allEvents} /> */}
-
                 {/* Events Grid */}
                 {allEvents.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {allEvents.map((event) => (
-                            <UpcomingCard
-                                key={event._id}
-                                event={event}
-                            />
-                        ))}
-                    </div>
+                    <EventFilter events={allEvents} />
                 ) : (
 
                     /* Empty State */
