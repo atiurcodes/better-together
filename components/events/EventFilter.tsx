@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { Event } from "@/lib/type";
 import EventCategoryNav from "./EventCategoryNav";
+import EventSearch from "./EventSearch";
 import UpcomingCard from "./UpcomingCard";
 
 interface EventFilterProps {
@@ -12,22 +13,41 @@ interface EventFilterProps {
 
 export default function EventFilter({ events }: EventFilterProps) {
     const [selectedCategory, setSelectedCategory] = useState("All Events");
+    const [searchTerm, setSearchTerm] = useState("");
 
-    // Filter events by selected category
-    const filteredEvents =
-        selectedCategory === "All Events"
-            ? events
-            : events.filter(
-                (event) => event.eventCategory === selectedCategory
-            );
+    // Filter events by category and search
+    const filteredEvents = events.filter((event) => {
+        const matchCategory =
+            selectedCategory === "All Events" ||
+            event.eventCategory === selectedCategory;
+
+        const searchValue = searchTerm.toLowerCase().trim();
+
+        const matchSearch =
+            event.eventTitle.toLowerCase().includes(searchValue) ||
+            event.eventLocation.toLowerCase().includes(searchValue);
+
+        return matchCategory && matchSearch;
+    });
 
     return (
         <section>
-            {/* Category Navigation */}
-            <EventCategoryNav
-                activeCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-            />
+            {/* Category Navigation and Search */}
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0 flex-1">
+                    <EventCategoryNav
+                        activeCategory={selectedCategory}
+                        onCategoryChange={setSelectedCategory}
+                    />
+                </div>
+
+                <div className="w-full sm:w-64 sm:shrink-0">
+                    <EventSearch
+                        searchTerm={searchTerm}
+                        onSearchChange={setSearchTerm}
+                    />
+                </div>
+            </div>
 
             {/* Filtered Events */}
             {filteredEvents.length > 0 ? (
@@ -42,7 +62,7 @@ export default function EventFilter({ events }: EventFilterProps) {
                         No Events Found
                     </h3>
                     <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                        No events available in this category right now.
+                        Try another search term or select a different category.
                     </p>
                 </div>
             )}
