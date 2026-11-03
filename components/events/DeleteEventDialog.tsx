@@ -16,15 +16,18 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { toast } from "react-toastify";
 
 export default function DeleteEventDialog({ event }: { event: Event }) {
     const [open, setOpen] = useState(false);
     const router = useRouter();
 
     const handleDeleteEvent = async () => {
-        const token = await getTokenFromClient();
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/delete-event/${event._id}`,
+            const token = await getTokenFromClient();
+
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/delete-event/${event._id}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -33,17 +36,24 @@ export default function DeleteEventDialog({ event }: { event: Event }) {
                 }
             );
 
+            const result = await res.json();
+
             if (!res.ok) {
-                throw new Error("Failed to delete event");
+                throw new Error(result.message || "Failed to delete event");
             }
+
+            toast.success(result.message || "Event deleted successfully!");
 
             setOpen(false);
             router.refresh();
 
         } catch (error) {
-            console.error(error);
+            toast.error(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to delete event!"
+            );
         }
-        console.log('clicked');
     };
 
     return (
@@ -52,7 +62,7 @@ export default function DeleteEventDialog({ event }: { event: Event }) {
                 render={
                     <button
                         type="button"
-                        className="rounded-xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-all hover:bg-red-600 hover:text-white dark:bg-red-950/40 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white"
+                        className="rounded-xl cursor-pointer bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-all hover:bg-red-600 hover:text-white dark:bg-red-950/40 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white"
                     >
                         Delete
                     </button>
@@ -76,6 +86,7 @@ export default function DeleteEventDialog({ event }: { event: Event }) {
                         type="button"
                         variant="outline"
                         onClick={() => setOpen(false)}
+                        className='cursor-pointer'
                     >
                         Cancel
                     </Button>
@@ -83,7 +94,7 @@ export default function DeleteEventDialog({ event }: { event: Event }) {
                     <Button
                         type="button"
                         onClick={handleDeleteEvent}
-                        className="bg-red-600 text-white hover:bg-red-700"
+                        className="bg-red-600 text-white hover:bg-red-700 cursor-pointer"
                     >
                         <Trash2 size={16} />
                         Confirm Delete

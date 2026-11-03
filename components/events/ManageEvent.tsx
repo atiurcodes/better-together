@@ -13,6 +13,7 @@ import EditEventDialog from "./EditEventDialog";
 import DeleteEventDialog from "./DeleteEventDialog";
 
 export default function ManageEvent({ event }: { event: Event }) {
+
     return (
         <article className="group w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-900/10 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-emerald-700">
 
@@ -36,10 +37,10 @@ export default function ManageEvent({ event }: { event: Event }) {
                     {event.eventCategory}
                 </div>
 
-                {/* Joined Badge */}
+                {/* My Event Badge */}
                 <div className="absolute right-4 top-4 flex items-center gap-1.5 rounded-full border border-white/30 bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur-md">
                     <CheckCircle2 size={13} />
-                    Joined
+                    My Event
                 </div>
 
                 {/* Event Date Badge */}
@@ -104,7 +105,7 @@ export default function ManageEvent({ event }: { event: Event }) {
 
                     {/* Left Side - View Details */}
                     <Link
-                        href={`/upcoming-event/${event._id}`}
+                        href={`/manage-events/${event._id}`}
                         className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
                         <span>View Details</span>

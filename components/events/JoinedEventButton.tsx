@@ -22,7 +22,7 @@ const JoinedEventButton = ({ event }: { event: Event }) => {
         const data = {
             userName: user?.name,
             userEmail: user?.email,
-            eventID: _id,
+            eventId: _id,
             ...allevent,
             joinedAt: new Date()
         }
@@ -43,7 +43,7 @@ const JoinedEventButton = ({ event }: { event: Event }) => {
             <button
                 onClick={handleJoinedEvent}
                 type="button"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3.5 font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-700"
+                className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3.5 font-semibold text-white shadow-lg shadow-emerald-600/20 transition hover:-translate-y-0.5 hover:bg-emerald-700"
             >
                 <HeartHandshake size={19} />
                 Join Event

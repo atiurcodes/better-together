@@ -1,6 +1,6 @@
 
 import { auth } from "@/lib/auth";
-import { Event } from "@/lib/type";
+import { JoinedEventType } from "@/lib/type";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { CalendarDays, Compass, Sparkles } from "lucide-react";
@@ -25,7 +25,7 @@ const JoinedEventsPage = async () => {
         }
     );
 
-    const joinedEvents: Event[] = await res.json();
+    const joinedEvents: JoinedEventType[] = await res.json();
 
     return (
         <main className="min-h-screen bg-[#F3F8F3] px-5 py-12 transition-colors duration-300 dark:bg-[#101C16]">
@@ -53,7 +53,7 @@ const JoinedEventsPage = async () => {
                         </div>
 
                         <Link
-                            href="/events"
+                            href="/upcoming-event"
                             className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-[#244B35] px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#4C8A59]"
                         >
                             <Compass className="size-4" />
@@ -113,7 +113,7 @@ const JoinedEventsPage = async () => {
                         </p>
 
                         <Link
-                            href="/events"
+                            href="/upcoming-event"
                             className="mt-7 inline-flex items-center gap-2 rounded-xl bg-[#244B35] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#397D48] dark:bg-[#397D48] dark:hover:bg-[#4C8A59]"
                         >
                             <Compass className="size-4" />

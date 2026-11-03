@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { eventImages } from "@/data/eventImages";
 import Image from "next/image";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
+import { toast } from "react-toastify";
 
 export default function EditEventDialog({ event }: { event: Event }) {
     const [open, setOpen] = useState(false);
@@ -29,24 +30,44 @@ export default function EditEventDialog({ event }: { event: Event }) {
 
     const handleUpdateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const token = await getTokenFromClient();
-        const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-event/edit/${event._id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        });
-        if (!res.ok) {
-            throw new Error("Failed to update event");
+
+        try {
+            const form = e.currentTarget;
+            const formData = new FormData(form);
+            const token = await getTokenFromClient();
+
+            const data = Object.fromEntries(formData.entries()) as Record<string, string>;
+
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/my-event/edit/${event._id}`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.message || "Failed to update event");
+            }
+
+            toast.success(result.message || "Event updated successfully!");
+
+            setOpen(false);
+            router.refresh();
+
+        } catch (error) {
+            toast.error(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to update event!"
+            );
         }
-        const result = await res.json();
-        setOpen(false);
-        router.refresh();
-        console.log(result);
     };
 
     return (
@@ -56,7 +77,7 @@ export default function EditEventDialog({ event }: { event: Event }) {
                     <Button
                         type="button"
                         variant="outline"
-                        className="flex-1 gap-2 rounded-xl border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                        className="flex-1 gap-2 cursor-pointer rounded-xl border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                     >
                         <Pencil size={16} />
                         Edit Event
@@ -169,7 +190,7 @@ export default function EditEventDialog({ event }: { event: Event }) {
 
                     <Button
                         type="submit"
-                        className="w-full bg-emerald-600 font-semibold text-white hover:bg-emerald-700"
+                        className="w-full cursor-pointer bg-emerald-600 font-semibold text-white hover:bg-emerald-700"
                     >
                         Update Event
                     </Button>

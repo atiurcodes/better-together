@@ -83,7 +83,7 @@ const page = async () => {
                         </p>
 
                         <Link
-                            href="/events/create"
+                            href="/event/add-event"
                             className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-5 py-3 font-semibold text-white transition-all hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                         >
                             <Plus size={18} />
