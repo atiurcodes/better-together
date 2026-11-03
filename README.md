@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BetterTogether – Community Event Management Platform
 
-## Getting Started
+**Live Website:** https://better-together-coral.vercel.app/
 
-First, run the development server:
+## About the Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+BetterTogether is a community event management platform that connects people through meaningful activities and social initiatives. Users can explore upcoming events, join community activities, and manage their participation in one place.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **User Authentication:** Securely sign up and log in using email or Google authentication.
+- **Explore Events:** Browse upcoming community events across different categories.
+- **Search & Filter:** Find events easily by event title, location, or category.
+- **Create Events:** Authenticated users can create and publish their own community events.
+- **Join Events:** Users can join events and participate in activities that interest them.
+- **Manage Joined Events:** View joined events and leave an event whenever needed.
+- **Event Details:** Explore detailed information about each event, including date, location, category, and description.
+- **Manage Your Events:** Organize and manage events created by you.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Technologies Used
 
-## Learn More
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth
 
-To learn more about Next.js, take a look at the following resources:
+## Purpose
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The goal of BetterTogether is to encourage community participation, collaboration, and positive social impact by making event discovery and management easier.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**BetterTogether – Together, We Make a Difference!**
