@@ -31,7 +31,7 @@ import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 
 const navLinks = [
-    { name: "Upcoming event", href: "/upcoming-event" },
+    { name: "Upcoming events", href: "/upcoming-event" },
 ];
 
 export default function Navbar() {
@@ -150,24 +150,42 @@ export default function Navbar() {
                                         <DropdownMenuSeparator className="bg-emerald-100" />
 
                                         {/* Create Event */}
-                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                            <CalendarPlus className="size-4 text-emerald-700" />
+                                        <DropdownMenuItem className="
+                                            cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+                                            text-gray-700 dark:text-gray-700
+                                            transition-colors
+                                            focus:bg-emerald-50 focus:text-[#244B35]
+                                            dark:focus:bg-[#244B35] dark:focus:text-white
+                                        ">
+                                            <CalendarPlus className="size-4 text-emerald-700 dark:text-emerald-400" />
                                             <Link href="/event/add-event" className="flex-1">
                                                 Create Event
                                             </Link>
                                         </DropdownMenuItem>
 
                                         {/* Manage Events */}
-                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                            <LayoutDashboard className="size-4 text-emerald-700" />
+                                        <DropdownMenuItem className="
+                                            cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+                                            text-gray-700 dark:text-gray-700
+                                            transition-colors
+                                            focus:bg-emerald-50 focus:text-[#244B35]
+                                            dark:focus:bg-[#244B35] dark:focus:text-white
+                                        ">
+                                            <LayoutDashboard className="size-4 text-emerald-700 dark:text-emerald-400" />
                                             <Link href="/manage-events" className="flex-1">
                                                 Manage Events
                                             </Link>
                                         </DropdownMenuItem>
 
                                         {/* Joined Events */}
-                                        <DropdownMenuItem className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition-colors focus:bg-emerald-50 focus:text-[#244B35]">
-                                            <Users className="size-4 text-emerald-700" />
+                                        <DropdownMenuItem className="
+                                            cursor-pointer gap-3 rounded-lg px-3 py-2.5 text-sm font-medium
+                                            text-gray-700 dark:text-gray-700
+                                            transition-colors
+                                            focus:bg-emerald-50 focus:text-[#244B35]
+                                            dark:focus:bg-[#244B35] dark:focus:text-white
+                                        ">
+                                            <Users className="size-4 text-emerald-700 dark:text-emerald-400" />
                                             <Link href="/joined-event" className="flex-1">
                                                 Joined Events
                                             </Link>
@@ -178,8 +196,13 @@ export default function Navbar() {
                                         {/* Logout */}
                                         <DropdownMenuItem
                                             onClick={handleLogOut}
-                                            className="cursor-pointer gap-3 rounded-lg px-3 py-2.5 font-semibold text-red-600 transition-colors focus:bg-red-50 focus:text-red-600"
-                                        >
+                                            className="
+                                                cursor-pointer gap-3 rounded-lg px-3 py-2.5 font-semibold
+                                                text-red-600 dark:text-red-400
+                                                transition-colors
+                                                focus:bg-red-50 focus:text-red-600
+                                                dark:focus:bg-red-950 dark:focus:text-red-400
+                                            ">
                                             <LogOut className="size-4" />
                                             Logout
                                         </DropdownMenuItem>

@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
     HeartHandshake,
@@ -10,9 +11,9 @@ const footerSections = [
         title: "Explore",
         links: [
             { name: "Upcoming Events", href: "/upcoming-event" },
-            { name: "Create an Event", href: "/create-event" },
+            { name: "Create an Event", href: "/event/add-event" },
             { name: "Manage My Events", href: "/manage-events" },
-            { name: "My Joined Events", href: "/joined-events" },
+            { name: "My Joined Events", href: "/joined-event" },
         ],
     },
     {
@@ -27,8 +28,8 @@ const footerSections = [
     {
         title: "Connect",
         links: [
-            { name: "About Us", href: "/about" },
-            { name: "Contact Us", href: "/contact" },
+            { name: "About Us", href: "#" },
+            { name: "Contact Us", href: "#" },
             { name: "Join Community", href: "/upcoming-event" },
         ],
     },
@@ -44,10 +45,10 @@ export default function Footer() {
                 <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
 
                     {/* Brand */}
-                    <div>
+                    <div className="text-center sm:text-left">
                         <Link
                             href="/"
-                            className="inline-flex items-center gap-2.5"
+                            className="inline-flex items-center justify-center gap-2.5"
                         >
                             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#244B35] text-white dark:bg-[#628B65]">
                                 <HeartHandshake size={22} />
@@ -61,16 +62,16 @@ export default function Footer() {
                             </span>
                         </Link>
 
-                        <p className="mt-4 max-w-xs text-sm leading-7 text-[#647866] dark:text-[#A8BDA9]">
+                        <p className="mx-auto mt-4 max-w-xs text-sm leading-7 text-[#647866] dark:text-[#A8BDA9] sm:mx-0">
                             A community-driven platform empowering people
                             to come together, support meaningful causes,
                             and create positive social change.
                         </p>
 
-                        <div className="mt-4 flex items-center gap-2 text-xs text-[#758B76] dark:text-[#91A993]">
+                        <div className="mt-4 flex items-center justify-center gap-2 text-xs text-[#758B76] dark:text-[#91A993] sm:justify-start">
                             <MapPin
                                 size={15}
-                                className="text-[#397D48] dark:text-[#91B88F]"
+                                className="shrink-0 text-[#397D48] dark:text-[#91B88F]"
                             />
                             Bangladesh · Community Impact
                         </div>
@@ -78,14 +79,20 @@ export default function Footer() {
 
                     {/* Footer Navigation */}
                     {footerSections.map((section) => (
-                        <div key={section.title}>
+                        <div
+                            key={section.title}
+                            className="text-center sm:text-left"
+                        >
                             <h3 className="mb-5 text-sm font-bold uppercase tracking-wide text-[#244B35] dark:text-[#D5E7D7]">
                                 {section.title}
                             </h3>
 
                             <ul className="space-y-3.5">
                                 {section.links.map((link) => (
-                                    <li key={link.name}>
+                                    <li
+                                        key={link.name}
+                                        className="flex justify-center sm:justify-start"
+                                    >
                                         <Link
                                             href={link.href}
                                             className="w-fit text-sm text-[#647866] transition-colors duration-200 hover:text-[#397D48] dark:text-[#A8BDA9] dark:hover:text-[#91B88F]"
@@ -108,7 +115,7 @@ export default function Footer() {
                         All rights reserved.
                     </p>
 
-                    <p className="flex items-center gap-1.5 text-xs text-[#758B76] dark:text-[#91A993]">
+                    <p className="flex items-center justify-center gap-1.5 text-xs text-[#758B76] dark:text-[#91A993]">
                         Made with
                         <Heart
                             size={13}

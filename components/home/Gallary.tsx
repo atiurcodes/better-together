@@ -1,43 +1,5 @@
+import { galleryImages } from "@/data/galaryImage";
 import Image from "next/image";
-
-const galleryImages = [
-    {
-        id: 1,
-        image: "https://i.ibb.co.com/RTwvZqFs/erwin-bosman-6x-MCl-JG5d-W8-unsplash.jpg",
-        title: "Community Volunteering",
-        category: "Community",
-    },
-    {
-        id: 2,
-        image: "https://i.ibb.co.com/G3fvjmHC/pexels-franco30-12193105.jpg",
-        title: "Community Support",
-        category: "Charity",
-    },
-    {
-        id: 3,
-        image: "https://i.ibb.co.com/PGSTKdhb/vitaly-gariev-ci-Uu-GGd1-OKo-unsplash.jpg",
-        title: "Making a Difference",
-        category: "Social Impact",
-    },
-    {
-        id: 4,
-        image: "https://i.ibb.co.com/Qv6Q76tY/pexels-rdne-6647178.jpg",
-        title: "Together We Care",
-        category: "Volunteering",
-    },
-    {
-        id: 5,
-        image: "https://i.ibb.co.com/YFsxw8G9/cdc-GDok-EYn-Ofn-E-unsplash.jpg",
-        title: "Building a Better Future",
-        category: "Community",
-    },
-    {
-        id: 6,
-        image: "https://i.ibb.co.com/N2My39Zf/saad-ali-UQ94-WDFt-d-Q-unsplash.jpg",
-        title: "Planting for Tomorrow",
-        category: "Environment",
-    },
-];
 
 export default function Gallery() {
     return (

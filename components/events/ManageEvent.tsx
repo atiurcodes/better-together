@@ -101,21 +101,20 @@ export default function ManageEvent({ event }: { event: Event }) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center justify-between gap-3 border-t border-emerald-50 pt-4 dark:border-slate-700">
+                <div className="flex items-center justify-between gap-2 border-t border-emerald-50 pt-4 dark:border-slate-700">
 
-                    {/* Left Side - View Details */}
+                    {/* View Details */}
                     <Link
                         href={`/manage-events/${event._id}`}
-                        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
+                        className="flex min-w-0 flex-1 items-center justify-center gap-1 rounded-xl bg-emerald-50 px-2 py-2.5 text-xs font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white sm:gap-2 sm:px-4 sm:py-3 sm:text-sm dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
-                        <span>View Details</span>
-                        <ArrowUpRight size={18} />
+                        <span className="truncate">View Details</span>
+                        <ArrowUpRight size={16} className="shrink-0 sm:size-[18px]" />
                     </Link>
 
-                    {/* Right Side - Edit & Delete */}
-                    <div className="flex items-center gap-2">
+                    {/* Edit & Delete */}
+                    <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
                         <EditEventDialog event={event} />
-
                         <DeleteEventDialog event={event} />
                     </div>
 

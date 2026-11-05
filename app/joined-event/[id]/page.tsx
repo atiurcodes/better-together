@@ -202,7 +202,7 @@ const JoinedEventDetailsPage = async ({ params }: JoinedEventDetailsPage) => {
 
                                 <div className="border-t border-slate-100 pt-5 dark:border-slate-800">
                                     {/* join event button functionality */}
-                                    <JoinedEvents event={event} />
+                                    <JoinedEvents event={event} redirectAfterLeave={true} />
                                     <p className="mt-3 text-center text-xs text-slate-400 dark:text-slate-500">
                                         Together, we can make a difference.
                                     </p>

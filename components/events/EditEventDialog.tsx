@@ -76,15 +76,13 @@ export default function EditEventDialog({ event }: { event: Event }) {
                 render={
                     <Button
                         type="button"
-                        variant="outline"
-                        className="flex-1 gap-2 cursor-pointer rounded-xl border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                        className="flex min-w-0 flex-1 h-auto cursor-pointer items-center justify-center gap-1 rounded-xl bg-emerald-50 px-2 py-2.5 text-xs font-semibold text-emerald-800 transition-all duration-300 hover:bg-emerald-700 hover:text-white sm:gap-2 sm:px-4 sm:py-3 sm:text-sm dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-700 dark:hover:text-white"
                     >
                         <Pencil size={16} />
-                        Edit Event
+                        <span className="truncate">Edit Event</span>
                     </Button>
                 }
             />
-
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-xl">
                 <DialogHeader>
                     <DialogTitle className="text-xl font-bold text-emerald-700">
